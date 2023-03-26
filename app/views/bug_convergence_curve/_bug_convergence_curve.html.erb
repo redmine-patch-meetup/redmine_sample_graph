@@ -1,5 +1,12 @@
 <h2>BugConvergenceCurveController#show</h2>
 
+Issues
+<ol>
+<% version.fixed_issues.each do |issue| %>
+  <li><%= issue.subject %>: <%= issue.description %></li>
+<% end %>
+</ol>
+
  <head>
    <meta charset="utf-8">
    <title>グラフ</title> 
