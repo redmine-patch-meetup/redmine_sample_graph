@@ -7,4 +7,4 @@ Redmine::Plugin.register :redmine_sample_graph do
   author_url 'https://github.com/orgs/redmine-patch-meetup/people'
 end
 
-require File.dirname(__FILE__) + '/lib/bug_convergence_curve/hook_listener'
+require_relative './lib/bug_convergence_curve/hook_listener'
