@@ -1,0 +1,57 @@
+<h2>BugConvergenceCurveController#show</h2>
+<head>
+  <meta charset="utf-8">
+  <title>グラフ</title> 
+</head>
+<canvas id="myBarChart"></canvas>
+<%= javascript_include_tag('chart-3.9.1.min', plugin: 'redmine_sample_graph' ) %>
+<%= stylesheet_link_tag('chart.css', plugin: 'redmine_sample_graph' ) %>
+
+<script>
+const MONTH_PERIOD = 7; //月数
+
+let ar_labels  = ["1月", "2月", "3月", "4月", "5月", "6月", "7月"];
+let ar_new_bug    = [0, 10, 10,  8,  5,  2,  1]; //新規バグ
+let ar_bug_sum    = [0, 10, 20, 28, 33, 35, 36]; //バグ総数
+let ar_bug_fix    = [0,  0,  5,  5,  5,  5,  5]; //バグ修正
+let ar_remain_bug = [0, 10, 15, 18, 18, 15, 11]; //バグ残数
+let max_bug_sum = Math.max(...ar_bug_sum);   //バグ総数の配列最大値
+let step = Math.floor( max_bug_sum / 5 );    //バグ総数の配列最大値 /5 
+
+//console.log("max_bug_sum" + max_bug_sum);
+//console.log("step" + step);
+
+let ar_datasets = [];
+ar_datasets[0] = {label:"新規バグ",  data: ar_new_bug, backgroundColor: "rgba(0,0,255,0.5)"};
+ar_datasets[1] = {label:"バグ総数",  data: ar_bug_sum, backgroundColor: "rgba(130,201,169,0.5)"};
+ar_datasets[2] = {label:"バグ修正",  data: ar_bug_fix, backgroundColor: "rgba(255,183,76,0.5)"};
+ar_datasets[3] = {label:"バグ残数",  data: ar_remain_bug, backgroundColor: "rgba(255,16,16,0.5)"};
+
+
+let ctx = document.getElementById("myBarChart");
+let myBarChart = new Chart(ctx, {
+  type: 'bar',//棒グラフを指定
+  data: {
+    labels: ar_labels,	//X座標のラベル指定(配列)
+    datasets: ar_datasets,	//データセット指定(配列)
+  },
+  options: {
+    title: {
+      display: true,
+      text: 'バグ推移'
+    },
+    scales: {
+      yAxes: [{
+        ticks: {
+          suggestedMax: max_bug_sum, //バグ総数の最大値をグラフのMAXに指定
+          suggestedMin: 0, //0を座標の MINに指定
+          stepSize: step, // バグ総数 /5 を 間隔にする
+          callback: function(value, index, values){
+            return  value +  '件'
+          }
+        }
+      }]
+    },
+  }
+});
+</script>
