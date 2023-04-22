@@ -3,6 +3,13 @@
   <meta charset="utf-8">
   <title>グラフ</title> 
 </head>
+<ol>
+<% @project.versions.each do |version| %>
+  <% version.fixed_issues.each do |issue| %>
+    <li><%= issue.subject %>: <%= issue.description %></li>
+  <% end %>
+<% end %>
+</ol>
 
 <canvas id="myBarChart"></canvas>
 <%= javascript_include_tag('chart.min') %>
