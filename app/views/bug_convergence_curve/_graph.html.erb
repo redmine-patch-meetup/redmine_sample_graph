@@ -1,7 +1,7 @@
 <h2>BugConvergenceCurveController#show</h2>
 <head>
   <meta charset="utf-8">
-  <title>グラフ</title> 
+  <title>グラフ</title>
 </head>
 <ol>
 <% @project.versions.each do |version| %>
@@ -48,17 +48,17 @@ let myBarChart = new Chart(ctx, {
       text: 'バグ推移'
     },
     scales: {
-      yAxes: [{
+      y: {
+        suggestedMax: max_bug_sum,
+        suggestedMin: 0, //0を座標の MINに指定
         ticks: {
-          suggestedMax: max_bug_sum, //バグ総数の最大値をグラフのMAXに指定
-          suggestedMin: 0, //0を座標の MINに指定
           stepSize: step, // バグ総数 /5 を 間隔にする
           callback: function(value, index, values){
             return  value +  '件'
           }
         }
-      }]
-    },
+      }
+    }
   }
 });
 </script>
